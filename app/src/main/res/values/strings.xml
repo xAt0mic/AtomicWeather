@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name" translatable="false">AtomicRSS</string>
+    <string name="db_name" translatable="false">rss.db</string>
+    <string name="tv_network_not_available">Oops, we cannot reach the news. Please check your internet connection.</string>
+
+    <!-- Auth -->
+    <string name="loading">Loading…</string>
+</resources>

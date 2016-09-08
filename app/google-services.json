@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "767276387759",
+    "firebase_url": "https://atomicrss-36f6b.firebaseio.com",
+    "project_id": "atomicrss-36f6b",
+    "storage_bucket": "atomicrss-36f6b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767276387759:android:452e27e999bf1de5",
+        "android_client_info": {
+          "package_name": "com.fredericborrel.atomicrss"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "767276387759-b2dm3tdqp7dhkvpcq6np8tobvefqrub3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1tRZw6M4JLPopqon5w4MqLnHiJqe8PkU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
