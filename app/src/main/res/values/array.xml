@@ -1,0 +1,5 @@
+<resources>
+    <string-array name="main_drawer_menu_items">
+        <item>@string/user_profile</item>
+    </string-array>
+</resources>

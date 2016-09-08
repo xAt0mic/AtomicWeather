@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -116,17 +117,19 @@ public class AuthActivity extends AppCompatActivity implements GoogleApiClient.O
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            updateUI(true);
+            updateUI(true, acct);
         } else {
             // Signed out, show unauthenticated UI.
-            updateUI(false);
+            updateUI(false, null);
         }
     }
 
-    private void updateUI(boolean result){
+    private void updateUI(boolean result, GoogleSignInAccount gsia){
         if(result){
             Intent mainActivity = new Intent(this, MainActivity.class);
+            mainActivity.putExtra(MainActivity.GOOGLE_ACCOUNT_KEY, gsia);
             this.startActivity(mainActivity);
+            finish();
         }
     }
 
