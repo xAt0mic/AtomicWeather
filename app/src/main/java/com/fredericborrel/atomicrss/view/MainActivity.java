@@ -2,6 +2,7 @@ package com.fredericborrel.atomicrss.view;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -133,6 +134,17 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         };
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerLayout.addDrawerListener(drawerToggle);
+
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        item.setChecked(true);
+                        drawerLayout.closeDrawers();
+                        return true;
+                    }
+                }
+        );
 
         // Set Google Account Information to the header
         emailMenu.setText(userAccount.getEmail());
