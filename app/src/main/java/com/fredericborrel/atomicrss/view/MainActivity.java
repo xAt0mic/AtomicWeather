@@ -3,19 +3,21 @@ package com.fredericborrel.atomicrss.view;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.TextView;
 
 import com.fredericborrel.atomicrss.R;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Frederic on 12/04/16.
@@ -25,11 +27,13 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public static final  String GOOGLE_ACCOUNT_KEY = "GOOGLE_ACCOUNT_KEY";
     private static final String TAG = "MainActivity";
 
-    private ListView drawerList;
-    private ArrayAdapter<String> drawerAdapter;
     private GoogleSignInAccount userAccount;
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private TextView userNameMenu;
+    private TextView emailMenu;
+    private CircleImageView profilePictureMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +43,9 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         // Get Google Account Information
         Bundle b = getIntent().getExtras();
         userAccount = b.getParcelable(GOOGLE_ACCOUNT_KEY);
-        Log.d(TAG, "userAccount: " + userAccount.getDisplayName());
 
         // Setup the drawer menu
-        drawerList = (ListView)findViewById(R.id.main_navList);
-        drawerLayout = (DrawerLayout)findViewById(R.id.main_drawer_layout);
         setupDrawer();
-        addDrawerItems();
 
         // Setup the ActionBar
         ActionBar actionBar = getSupportActionBar();
@@ -107,13 +107,17 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         return super.onOptionsItemSelected(item);
     }
 
-    private void addDrawerItems(){
-        String[] menuArray = getResources().getStringArray(R.array.main_drawer_menu_items);
-        drawerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, menuArray);
-        drawerList.setAdapter(drawerAdapter);
-    }
-
     private void setupDrawer(){
+        // Retrieve Views
+        drawerLayout = (DrawerLayout)findViewById(R.id.main_drawer_layout);
+        navigationView = (NavigationView)findViewById(R.id.main_navList);
+
+        View header = navigationView.getHeaderView(0);
+        userNameMenu = (TextView)header.findViewById(R.id.menu_username);
+        emailMenu = (TextView)header.findViewById(R.id.menu_email);
+        profilePictureMenu = (CircleImageView)header.findViewById(R.id.menu_image);
+
+        // Adding behavior when we are opening/closing the drawer
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.menu_open, R.string.menu_close){
             // Called when a drawer has settled in a completely open state.
             public void onDrawerOpened(View drawerView) {
@@ -129,5 +133,10 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         };
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerLayout.addDrawerListener(drawerToggle);
+
+        // Set Google Account Information to the header
+        emailMenu.setText(userAccount.getEmail());
+        userNameMenu.setText(userAccount.getDisplayName());
+        Picasso.with(getApplicationContext()).load(userAccount.getPhotoUrl()).into(profilePictureMenu);
     }
 }

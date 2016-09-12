@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Main Colors -->
     <color name="colorPrimary">#F44336</color>
     <color name="colorPrimaryDark">#B71C1C</color>
     <color name="colorAccent">#00BCD4</color>
 
+    <!-- General -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
 
+    <!-- Auth -->
     <color name="dark_filter">#70000000</color>
-    <color name="et_auth_hint_color">@color/white</color>
     <color name="tv_auth_app_name_color">@color/white</color>
     <color name="tv_auth_drop_shadow_color">@color/black</color>
-    <color name="bt_auth_login_google_color">@color/white</color>
 
 </resources>
