@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fredericborrel.atomicrss.R;
-import com.fredericborrel.atomicrss.model.RSSItem;
+import com.fredericborrel.atomicrss.data.model.RSSItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
