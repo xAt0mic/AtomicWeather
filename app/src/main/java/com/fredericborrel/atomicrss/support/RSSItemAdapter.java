@@ -56,7 +56,11 @@ public class RSSItemAdapter extends ArrayAdapter<RSSItem> {
         rssViewHolder.itemThumbnailURL = data.get(position).getRssImage();
         rssViewHolder.itemTitleTV.setText(data.get(position).getRssTitle());
         rssViewHolder.itemDateTV.setText(data.get(position).getRssDate());
-        Picasso.with(myContext).load(rssViewHolder.itemThumbnailURL).into(rssViewHolder.itemThumbnailIV);
+        Picasso.with(myContext)
+                .load(rssViewHolder.itemThumbnailURL)
+                .fit()
+                .centerCrop()
+                .into(rssViewHolder.itemThumbnailIV);
         return convertView;
     }
 

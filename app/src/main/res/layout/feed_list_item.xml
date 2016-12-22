@@ -1,41 +1,41 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingTop="@dimen/item_vertical_margin"
-    android:paddingBottom="@dimen/item_vertical_margin"
-    android:paddingLeft="@dimen/item_horizontal_margin"
-    android:paddingRight="@dimen/item_horizontal_margin"
-    >
+    android:layout_height="@dimen/item_image_size"
+    android:paddingStart="@dimen/activity_horizontal_margin"
+    android:paddingEnd="@dimen/activity_horizontal_margin"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/itemImage"
         android:layout_width="@dimen/item_image_size"
         android:layout_height="@dimen/item_image_size"
-        android:paddingRight="@dimen/item_image_margin"/>
+        android:paddingEnd="@dimen/item_image_end_padding"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/item_text_top_padding">
 
         <TextView
             android:id="@+id/itemTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:maxLines="2"
+            android:ellipsize="end"
             android:textIsSelectable="false"
-            android:textSize="@dimen/item_title_text_size" >
-        </TextView>
+            android:textSize="@dimen/item_title_text_size"/>
         <TextView
             android:id="@+id/itemDate"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/itemTitle"
             android:maxLines="1"
+            android:textColor="@color/grey"
             android:textSize="@dimen/item_date_text_size"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

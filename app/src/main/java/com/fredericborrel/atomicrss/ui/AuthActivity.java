@@ -1,4 +1,4 @@
-package com.fredericborrel.atomicrss.view;
+package com.fredericborrel.atomicrss.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

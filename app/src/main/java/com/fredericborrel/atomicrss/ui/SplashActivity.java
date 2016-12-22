@@ -1,4 +1,4 @@
-package com.fredericborrel.atomicrss.view;
+package com.fredericborrel.atomicrss.ui;
 
 import android.content.Intent;
 import android.os.Bundle;

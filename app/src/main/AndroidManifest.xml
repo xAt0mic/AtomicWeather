@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.SplashActivity"
+            android:name=".ui.SplashActivity"
             android:theme="@style/NoActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,9 +22,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.MainActivity" />
+            android:name=".ui.MainActivity" />
         <activity
-            android:name=".view.AuthActivity"
+            android:name=".ui.AuthActivity"
             android:theme="@style/NoActionBarTheme"
             android:screenOrientation="portrait"/>
     </application>

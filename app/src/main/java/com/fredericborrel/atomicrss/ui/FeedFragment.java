@@ -1,4 +1,4 @@
-package com.fredericborrel.atomicrss.view;
+package com.fredericborrel.atomicrss.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
