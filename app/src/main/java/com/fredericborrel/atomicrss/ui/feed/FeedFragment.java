@@ -1,24 +1,25 @@
-package com.fredericborrel.atomicrss.ui;
+package com.fredericborrel.atomicrss.ui.feed;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fredericborrel.atomicrss.R;
 import com.fredericborrel.atomicrss.business.sync.SyncDataManager;
 import com.fredericborrel.atomicrss.data.dao.RSSItemDao;
+import com.fredericborrel.atomicrss.data.event.RSSItemOnClickEvent;
 import com.fredericborrel.atomicrss.data.event.RSSReadEvent;
 import com.fredericborrel.atomicrss.data.local.DatabaseHelper;
 import com.fredericborrel.atomicrss.data.model.RSSItem;
 import com.fredericborrel.atomicrss.support.NetworkAvailability;
-import com.fredericborrel.atomicrss.support.RSSItemAdapter;
+import com.fredericborrel.atomicrss.ui.NewsFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -31,35 +32,38 @@ import java.util.List;
 /**
  * Created by Frederic on 12/04/16.
  */
-public class FeedFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener{
+public class FeedFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String STREAM_URL = "http://feeds.feedburner.com/Mobilecrunch";
     private static final String STREAM_URL_BIS = "http://feeds.gawker.com/gizmodo/full";
     private static final String TAG = "FeedActivity";
 
-    private ArrayList<RSSItem> listRSS;
-    private RSSItemAdapter itemAdapter;
-    private SwipeRefreshLayout refreshLayout;
+    private FeedAdapter mItemAdapter;
+    private SwipeRefreshLayout mRefreshLayout;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     private TextView tvNoInternet;
-    private ListView lvFeed;
+    private RecyclerView lvFeed;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         final View view = inflater.inflate(R.layout.fragment_feed, container, false);
 
         // Instantiate pull to refresh
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
-        refreshLayout.setOnRefreshListener(this);
+        mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
+        mRefreshLayout.setOnRefreshListener(this);
 
         tvNoInternet = (TextView) view.findViewById(R.id.tv_network_not_available);
 
-        lvFeed = (ListView) view.findViewById(R.id.feedview);
+        lvFeed = (RecyclerView) view.findViewById(R.id.feedview);
 
-        listRSS = new ArrayList<>();
-        itemAdapter = new RSSItemAdapter(getActivity(), R.layout.feed_list_item, listRSS);
-        lvFeed.setAdapter(itemAdapter);
-        lvFeed.setOnItemClickListener(this);
+        mItemAdapter = new FeedAdapter();
+
+        mLayoutManager = new LinearLayoutManager(getActivity());
+
+        lvFeed.setHasFixedSize(true);
+        lvFeed.setLayoutManager(mLayoutManager);
+        lvFeed.setAdapter(mItemAdapter);
 
         // Load data from database
         readLocalRSS();
@@ -68,7 +72,7 @@ public class FeedFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             // Download News from RSS source
             readRemoteRSS(STREAM_URL);
         }
-        else if(listRSS.isEmpty()){
+        else if(mItemAdapter.getItemCount() < 1){
             tvNoInternet.setVisibility(View.VISIBLE);
         }
 
@@ -95,15 +99,15 @@ public class FeedFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 tvNoInternet.setVisibility(View.GONE);
         } else {
             Toast.makeText(getContext(), this.getString(R.string.tv_network_not_available),Toast.LENGTH_LONG).show();
-            refreshLayout.setRefreshing(false);
+            mRefreshLayout.setRefreshing(false);
         }
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RSSItemOnClickEvent event) {
         // Make sure that we have internet before displaying the content
         if(NetworkAvailability.isNetworkAvailable()) {
-            final NewsFragment newsFragment = NewsFragment.newInstance(listRSS.get(position).getRssLink());
+            final NewsFragment newsFragment = NewsFragment.newInstance(event.getLink());
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit)
@@ -118,7 +122,7 @@ public class FeedFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(RSSReadEvent event) {
         updateData(event.getRSSItemList());
-        refreshLayout.setRefreshing(false);
+        mRefreshLayout.setRefreshing(false);
     }
 
     private void readLocalRSS() {
@@ -137,8 +141,6 @@ public class FeedFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void updateData(List<RSSItem> rssItemList) {
-        listRSS.clear();
-        listRSS.addAll(rssItemList);
-        itemAdapter.notifyDataSetChanged();
+        mItemAdapter.setRSSItemsList(rssItemList);
     }
 }

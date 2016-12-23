@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_image_size"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/itemImage"
+            android:layout_width="@dimen/item_image_size"
+            android:layout_height="@dimen/item_image_size"
+            android:paddingEnd="@dimen/item_image_end_padding"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/item_text_top_padding">
+
+            <TextView
+                android:id="@+id/itemTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textIsSelectable="false"
+                android:textSize="@dimen/item_title_text_size"/>
+            <TextView
+                android:id="@+id/itemDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/itemTitle"
+                android:maxLines="1"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/item_date_text_size"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

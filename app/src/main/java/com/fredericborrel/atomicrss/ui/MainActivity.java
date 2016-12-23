@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.fredericborrel.atomicrss.R;
+import com.fredericborrel.atomicrss.ui.feed.FeedFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
