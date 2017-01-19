@@ -9,6 +9,7 @@ import com.fredericborrel.atomicrss.business.event.EventManager;
 import com.fredericborrel.atomicrss.data.event.RSSItemOnClickEvent;
 import com.fredericborrel.atomicrss.data.model.RSSItem;
 import com.fredericborrel.atomicrss.databinding.ItemFeedBinding;
+import com.fredericborrel.atomicrss.support.CropTrapeziumTransformation;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -36,6 +37,7 @@ public class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnCl
                 .load(mRSSItem.getRssImage())
                 .fit()
                 .centerCrop()
+                .transform(new CropTrapeziumTransformation())
                 .into(mBinding.itemImage);
     }
 

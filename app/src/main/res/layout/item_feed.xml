@@ -2,28 +2,28 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_image_size"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:orientation="horizontal">
+        android:layout_height="@dimen/item_image_height"
+        android:paddingTop="@dimen/item_border_size"
+        android:paddingBottom="@dimen/item_border_size"
+        android:paddingEnd="@dimen/item_border_size"
+        android:orientation="horizontal"
+        android:background="@drawable/border">
 
         <ImageView
             android:id="@+id/itemImage"
-            android:layout_width="@dimen/item_image_size"
-            android:layout_height="@dimen/item_image_size"
-            android:paddingEnd="@dimen/item_image_end_padding"/>
+            android:layout_width="@dimen/item_image_width"
+            android:layout_height="@dimen/item_image_height"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="@dimen/item_text_top_padding">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/itemTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:maxLines="2"
+                android:layout_centerVertical="true"
+                android:maxLines="3"
                 android:ellipsize="end"
                 android:textIsSelectable="false"
                 android:textSize="@dimen/item_title_text_size"/>
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@id/itemTitle"
+                android:layout_alignParentBottom="true"
                 android:maxLines="1"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/item_date_text_size"/>

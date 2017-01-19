@@ -1,30 +1,33 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.feed.FeedFragment">
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.fredericborrel.reallysimplesyndication.FeedActivity">
+        tools:context=".ui.feed.FeedFragment">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/feedview"
+        <android.support.v4.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            tools:context="com.fredericborrel.reallysimplesyndication.FeedActivity">
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/feedview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
-    <TextView
-        android:id="@+id/tv_network_not_available"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/tv_network_not_available"
-        android:visibility="gone"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_network_not_available"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/tv_network_not_available"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+</layout>

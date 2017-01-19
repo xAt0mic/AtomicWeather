@@ -1,14 +1,14 @@
 package com.fredericborrel.atomicrss.ui;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.ProgressBar;
 
 import com.fredericborrel.atomicrss.R;
+import com.fredericborrel.atomicrss.databinding.FragmentNewsBinding;
 import com.fredericborrel.atomicrss.support.RSSWebViewClient;
 
 
@@ -19,9 +19,8 @@ public class NewsFragment extends Fragment {
 
     private static final String URL_LINK_ARG = "url_link";
 
-    private String urlLink;
-    private WebView newsWebview;
-    private ProgressBar progressRing;
+    private String mUrlLink;
+    private FragmentNewsBinding mBinding;
 
     public static NewsFragment newInstance(String url){
         NewsFragment newsFragment = new NewsFragment();
@@ -41,23 +40,20 @@ public class NewsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            urlLink = getArguments().getString(URL_LINK_ARG);
+            mUrlLink = getArguments().getString(URL_LINK_ARG);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        final View view = inflater.inflate(R.layout.fragment_news, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_news, container, false);
 
-        newsWebview = (WebView) view.findViewById(R.id.news_webview);
-        progressRing = (ProgressBar) view.findViewById(R.id.news_progress_ring);
-
-        newsWebview.setWebViewClient(new RSSWebViewClient(progressRing));
-        newsWebview.loadUrl(urlLink);
+        mBinding.newsWebview.setWebViewClient(new RSSWebViewClient(mBinding.newsProgressRing));
+        mBinding.newsWebview.loadUrl(mUrlLink);
 
         // Make the progressbar being an indeterminate ring
-        progressRing.setIndeterminate(true);
+        mBinding.newsProgressRing.setIndeterminate(true);
 
-        return view;
+        return mBinding.getRoot();
     }
 }

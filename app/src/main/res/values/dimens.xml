@@ -11,10 +11,10 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- Feed Item -->
+    <dimen name="item_border_size">1dp</dimen>
     <dimen name="item_horizontal_margin">16dp</dimen>
-    <dimen name="item_image_size">80dp</dimen>
-    <dimen name="item_image_end_padding">16dp</dimen>
-    <dimen name="item_text_top_padding">16dp</dimen>
+    <dimen name="item_image_width">140dp</dimen>
+    <dimen name="item_image_height">80dp</dimen>
     <dimen name="item_title_text_size">@dimen/text_size_big</dimen>
     <dimen name="item_date_text_size">@dimen/text_size_regular</dimen>
 
