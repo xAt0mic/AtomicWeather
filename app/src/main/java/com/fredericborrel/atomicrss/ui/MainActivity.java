@@ -157,7 +157,9 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         // Set Google Account Information to the header
         mEmailMenu.setText(mUser.getEmail());
         mUserNameMenu.setText(mUser.getDisplayName());
-        Picasso.with(getApplicationContext()).load(mUser.getPhotoUrl()).into(mProfilePictureMenu);
+        Picasso.with(getApplicationContext())
+                .load(mUser.getPhotoUrl())
+                .into(mProfilePictureMenu);
     }
 
     // Sign out the user and send him back to the Authentication Activity

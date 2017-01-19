@@ -23,6 +23,6 @@
     <dimen name="tv_auth_app_text_size">30sp</dimen>
 
     <!-- Menu -->
-    <dimen name="header_menu_height">220dp</dimen>
+    <dimen name="header_menu_height">180dp</dimen>
     <dimen name="iv_profile_size">76dp</dimen>
 </resources>

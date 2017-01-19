@@ -17,12 +17,12 @@ import com.squareup.picasso.Transformation;
 
 public class CropTrapeziumTransformation implements Transformation {
 
-    private final float pointA = AtomicRSS.context.getResources().getDimension(R.dimen.item_image_width);
-    private final float pointB = AtomicRSS.context.getResources().getDimension(R.dimen.item_image_height);
-
     @Override
     public Bitmap transform(Bitmap source) {
-        Bitmap bmp = Bitmap.createBitmap(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
+        int width = source.getWidth();
+        int height = source.getHeight();
+
+        Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         BitmapShader shader = new BitmapShader(source, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         Canvas canvas = new Canvas(bmp);
         Paint paint = new Paint();
@@ -31,9 +31,9 @@ public class CropTrapeziumTransformation implements Transformation {
 
         Path trapPath = new Path();
         trapPath.moveTo(0,0);
-        trapPath.lineTo(pointA,0);
-        trapPath.lineTo(pointB, pointB);
-        trapPath.lineTo(0, pointB);
+        trapPath.lineTo(width,0);
+        trapPath.lineTo(height, height);
+        trapPath.lineTo(0, height);
         trapPath.close();
 
         canvas.drawPath(trapPath, paint);
