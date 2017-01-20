@@ -5,6 +5,10 @@
 
     <!-- Auth -->
     <string name="loading">Loading…</string>
+    <string name="authentication_failed">Authentication failed.</string>
+    <string name="auth_hello_text"><b>Hello Friend!</b></string>
+    <string name="auth_welcome_message">Welcome to AtomicRSS.\n To start up with, please sign in.</string>
+    <string name="auth_developped_by">© Developped by Frederic Borrel 2017</string>
 
     <!-- Menu -->
     <string name="feed">Feed</string>

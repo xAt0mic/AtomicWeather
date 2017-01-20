@@ -143,7 +143,7 @@ public class AuthActivity extends AppCompatActivity implements GoogleApiClient.O
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithCredential", task.getException());
-                            Toast.makeText(AuthActivity.this, "Authentication failed.",
+                            Toast.makeText(AuthActivity.this, getString(R.string.authentication_failed),
                                     Toast.LENGTH_SHORT).show();
                         }
                         hideProgressDialog();
