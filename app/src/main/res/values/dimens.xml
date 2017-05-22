@@ -11,11 +11,12 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- Feed Item -->
-    <dimen name="item_border_size">1dp</dimen>
+    <dimen name="item_border_size">0.5dp</dimen>
     <dimen name="item_horizontal_margin">16dp</dimen>
-    <dimen name="item_image_width">140dp</dimen>
-    <dimen name="item_image_height">80dp</dimen>
+    <dimen name="item_image_width">60dp</dimen>
+    <dimen name="item_image_height">40dp</dimen>
     <dimen name="item_title_text_size">@dimen/text_size_big</dimen>
+    <dimen name="item_temperature_text_size">@dimen/text_size_big</dimen>
     <dimen name="item_date_text_size">@dimen/text_size_regular</dimen>
 
     <!-- Auth -->
@@ -28,4 +29,7 @@
     <!-- Menu -->
     <dimen name="header_menu_height">180dp</dimen>
     <dimen name="iv_profile_size">76dp</dimen>
+
+    <!-- Weather -->
+    <dimen name="detail_temperature">90sp</dimen>
 </resources>

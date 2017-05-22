@@ -6,12 +6,8 @@
         <item
             android:icon="@drawable/ic_feed"
             android:id="@+id/feed_menu_item"
-            android:title="@string/feed"
+            android:title="@string/weather"
             android:checked="true"/>
-        <item
-            android:icon="@drawable/ic_settings"
-            android:id="@+id/settings_menu_item"
-            android:title="@string/settings" />
         <item
             android:icon="@drawable/ic_sign_out"
             android:id="@+id/sign_out_menu_item"

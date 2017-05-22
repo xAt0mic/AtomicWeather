@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "767276387759",
-    "firebase_url": "https://atomicrss-36f6b.firebaseio.com",
-    "project_id": "atomicrss-36f6b",
-    "storage_bucket": "atomicrss-36f6b.appspot.com"
+    "project_number": "485297019886",
+    "firebase_url": "https://atomicweather-e27c5.firebaseio.com",
+    "project_id": "atomicweather-e27c5",
+    "storage_bucket": "atomicweather-e27c5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:767276387759:android:452e27e999bf1de5",
+        "mobilesdk_app_id": "1:485297019886:android:3ae16d30910b30b3",
         "android_client_info": {
-          "package_name": "com.fredericborrel.atomicrss"
+          "package_name": "com.fredericborrel.atomicweather"
         }
       },
       "oauth_client": [
         {
-          "client_id": "767276387759-b2dm3tdqp7dhkvpcq6np8tobvefqrub3.apps.googleusercontent.com",
+          "client_id": "485297019886-kota48me59ikiulacfm5m0pn0ta5dcvo.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA1tRZw6M4JLPopqon5w4MqLnHiJqe8PkU"
+          "current_key": "AIzaSyACPRA7pMSBiDmogh-GRxwfTIa2B_tg-qk"
         }
       ],
       "services": {
