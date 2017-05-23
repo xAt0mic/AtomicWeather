@@ -1,5 +1,6 @@
 package com.fredericborrel.atomicweather.ui.forecast;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -25,6 +29,7 @@ import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.squareup.picasso.Picasso;
@@ -32,6 +37,8 @@ import com.squareup.picasso.Picasso;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.UiThread;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -41,11 +48,11 @@ import org.androidannotations.annotations.UiThread;
 public class ForecastFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "ForecastActivity";
+    private static final int REQUEST_SELECT_PLACE_CODE = 1234;
     private static final String PLACES_COUNTRY_FILTER = "US";
     private static final String[] DEFAULT_LOCAL = {"atlanta", "united states", "ga"};
 
     private FragmentForecastBinding mBinding;
-    private PlaceAutocompleteFragment mAutocompleteFragment;
     private ForecastManager mForecastManager;
     private ForecastAdapter mItemAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -66,7 +73,7 @@ public class ForecastFragment extends Fragment implements SwipeRefreshLayout.OnR
         SnapHelper snapHelper = new GravitySnapHelper(Gravity.START);
         snapHelper.attachToRecyclerView(mBinding.forecastView);
 
-        initAutocompletePlaces();
+        setHasOptionsMenu(true);
 
         mForecastManager = ForecastManagerFactory.getForecastManager();
 
@@ -82,31 +89,41 @@ public class ForecastFragment extends Fragment implements SwipeRefreshLayout.OnR
         return mBinding.getRoot();
     }
 
-    private void initAutocompletePlaces() {
-        mAutocompleteFragment =
-                (PlaceAutocompleteFragment) getActivity()
-                        .getFragmentManager()
-                        .findFragmentById(R.id.fragment_place_autocomplete);
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        getActivity().getMenuInflater().inflate(R.menu.mn_forecast, menu);
+    }
 
-        AutocompleteFilter filter = new AutocompleteFilter.Builder()
-                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES)
-                .setCountry(PLACES_COUNTRY_FILTER)
-                .build();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.menu_item_search) {
+            try {
+                AutocompleteFilter filter = new AutocompleteFilter.Builder()
+                        .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES)
+                        .setCountry(PLACES_COUNTRY_FILTER)
+                        .build();
+                Intent intent = new PlaceAutocomplete
+                        .IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                        .setFilter(filter)
+                        .build(getActivity());
+                startActivityForResult(intent, REQUEST_SELECT_PLACE_CODE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-        mAutocompleteFragment.setFilter(filter);
-
-        mAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_SELECT_PLACE_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(getActivity(), data);
                 String[] address = place.getAddress().toString().split(", ");
                 mCurrentLocation = new Location(address[0], address[2], address[1]);
                 getWeatherCondition();
             }
-
-            @Override
-            public void onError(Status status) {
-            }
-        });
+        }
     }
 
     @Override

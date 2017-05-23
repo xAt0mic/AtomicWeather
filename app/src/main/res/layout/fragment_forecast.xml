@@ -13,24 +13,11 @@
             android:scaleType="centerCrop"
             android:tint="@color/background_tint"/>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
-
-            <fragment
-                android:id="@+id/fragment_place_autocomplete"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"/>
-
-        </android.support.v7.widget.Toolbar>
-
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/toolbar">
+            >
 
             <RelativeLayout
                 android:id="@+id/layout_general_detail"
@@ -46,11 +33,39 @@
                     android:layout_alignParentTop="true"
                     android:layout_margin="5dp"/>
 
+                <LinearLayout
+                    android:id="@+id/layout_forecast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:textSize="@dimen/item_title_text_size"
+                        android:text="@string/forecast"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/white"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/forecast_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
                 <RelativeLayout
                     android:id="@+id/layout_current_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_location"
+                    android:layout_above="@id/layout_forecast"
                     android:layout_centerHorizontal="true">
 
                     <TextView
@@ -83,32 +98,6 @@
                         android:layout_gravity="center_horizontal"
                         android:gravity="center"/>
                 </RelativeLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:textSize="@dimen/item_title_text_size"
-                        android:text="@string/forecast"/>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="@color/white"/>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/forecast_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
 
             </RelativeLayout>
 

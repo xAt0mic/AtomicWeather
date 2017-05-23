@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        // Setup the drawer menu
+        // Setup the mn_drawer menu
         setupDrawer();
 
         // Setup the ActionBar
@@ -106,11 +106,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Activate the navigation drawer toggle
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        // Activate the navigation mn_drawer toggle
+        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     private void setupDrawer(){
@@ -123,15 +120,15 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         mEmailMenu = (TextView)header.findViewById(R.id.menu_email);
         mProfilePictureMenu = (CircleImageView)header.findViewById(R.id.menu_image);
 
-        // Adding behavior when we are opening/closing the drawer
+        // Adding behavior when we are opening/closing the mn_drawer
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.menu_open, R.string.menu_close){
-            // Called when a drawer has settled in a completely open state.
+            // Called when a mn_drawer has settled in a completely open state.
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 invalidateOptionsMenu();
             }
 
-            // Called when a drawer has settled in a completely closed state.
+            // Called when a mn_drawer has settled in a completely closed state.
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 invalidateOptionsMenu();
