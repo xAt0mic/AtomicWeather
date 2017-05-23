@@ -137,7 +137,7 @@ public class ForecastFragment extends Fragment implements SwipeRefreshLayout.OnR
             Picasso.with(getContext())
                     .load(ConditionCode.getConditionImage(weatherCondition.getCurrentCode()))
                     .fit()
-                    .centerCrop()
+                    .centerInside()
                     .into(mBinding.ivDetailCondition);
         }
         mBinding.refreshLayout.setRefreshing(false);
