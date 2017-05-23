@@ -5,7 +5,7 @@
         android:layout_height="@dimen/item_image_height"
         android:padding = "5dp"
         android:orientation="horizontal"
-        android:background="@drawable/border">
+        android:background="@drawable/sh_border">
 
             <TextView
                 android:id="@+id/itemDate"
