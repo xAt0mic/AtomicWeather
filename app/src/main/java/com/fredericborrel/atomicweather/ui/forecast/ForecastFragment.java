@@ -15,9 +15,15 @@ import com.fredericborrel.atomicweather.R;
 import com.fredericborrel.atomicweather.business.manager.ForecastManager;
 import com.fredericborrel.atomicweather.business.manager.ForecastManagerFactory;
 import com.fredericborrel.atomicweather.data.model.ConditionCode;
+import com.fredericborrel.atomicweather.data.model.Location;
 import com.fredericborrel.atomicweather.data.model.WeatherCondition;
 import com.fredericborrel.atomicweather.databinding.FragmentForecastBinding;
 import com.fredericborrel.atomicweather.utils.NetworkAvailability;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.Background;
@@ -31,12 +37,16 @@ import org.androidannotations.annotations.UiThread;
 @EFragment
 public class ForecastFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private static final String TAG = "FeedActivity";
+    private static final String TAG = "ForecastActivity";
+    private static final String PLACES_COUNTRY_FILTER = "US";
+    private static final String[] DEFAULT_LOCAL = {"atlanta", "united states", "ga"};
 
     private FragmentForecastBinding mBinding;
+    private PlaceAutocompleteFragment mAutocompleteFragment;
     private ForecastManager mForecastManager;
     private ForecastAdapter mItemAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private Location mCurrentLocation;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -50,7 +60,11 @@ public class ForecastFragment extends Fragment implements SwipeRefreshLayout.OnR
         mBinding.forecastView.setLayoutManager(mLayoutManager);
         mBinding.forecastView.setAdapter(mItemAdapter);
 
+        initAutocompletePlaces();
+
         mForecastManager = ForecastManagerFactory.getForecastManager();
+
+        mCurrentLocation = new Location(DEFAULT_LOCAL[0], DEFAULT_LOCAL[1], DEFAULT_LOCAL[2]);
 
         if(NetworkAvailability.isNetworkAvailable()) {
             getWeatherCondition();
@@ -60,6 +74,33 @@ public class ForecastFragment extends Fragment implements SwipeRefreshLayout.OnR
         }
 
         return mBinding.getRoot();
+    }
+
+    private void initAutocompletePlaces() {
+        mAutocompleteFragment =
+                (PlaceAutocompleteFragment) getActivity()
+                        .getFragmentManager()
+                        .findFragmentById(R.id.fragment_place_autocomplete);
+
+        AutocompleteFilter filter = new AutocompleteFilter.Builder()
+                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES)
+                .setCountry(PLACES_COUNTRY_FILTER)
+                .build();
+
+        mAutocompleteFragment.setFilter(filter);
+
+        mAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                String[] address = place.getAddress().toString().split(", ");
+                mCurrentLocation = new Location(address[0], address[2], address[1]);
+                getWeatherCondition();
+            }
+
+            @Override
+            public void onError(Status status) {
+            }
+        });
     }
 
     @Override
@@ -76,7 +117,7 @@ public class ForecastFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Background
     protected void getWeatherCondition() {
-        updateData(mForecastManager.getWeatherCondition());
+        updateData(mForecastManager.getWeatherCondition(mCurrentLocation));
     }
 
     @UiThread

@@ -7,7 +7,7 @@ import com.fredericborrel.atomicweather.data.model.WeatherCondition;
 import com.fredericborrel.atomicweather.data.model.Location;
 import com.fredericborrel.atomicweather.utils.Constant;
 import com.fredericborrel.atomicweather.business.webservices.yahoo.weather.dto.ForecastAnswerDto;
-import com.fredericborrel.atomicweather.business.webservices.yahoo.weather.endpoints.ForecastEndpoint;
+import com.fredericborrel.atomicweather.business.webservices.yahoo.weather.endpoints.YahooForecastEndpoint;
 import com.fredericborrel.atomicweather.data.model.Forecast;
 
 import java.io.IOException;
@@ -24,22 +24,34 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class YahooForecastManager implements ForecastManager {
 
-    private ForecastEndpoint mForecastEndpoint;
+    private final static String CITY_PARAMETER = "_CITY_";
+    private final static String STATE_PARAMETER = "_STATE_";
+    private final static String ENDPOINT = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\""+CITY_PARAMETER+", "+STATE_PARAMETER+"\")";
+    private final static String FORMAT = "json";
+
+    private YahooForecastEndpoint mYahooForecastEndpoint;
     private Retrofit mRetrofit;
 
-    public YahooForecastManager() {
+    YahooForecastManager() {
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(Constant.YAHOO_API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        mForecastEndpoint = mRetrofit.create(ForecastEndpoint.class);
+        mYahooForecastEndpoint = mRetrofit.create(YahooForecastEndpoint.class);
     }
 
-    public WeatherCondition getWeatherCondition() {
+    public String buildForecastQuery(Location location) {
+        return  ENDPOINT
+                .replace(CITY_PARAMETER, location.getCity())
+                .replace(STATE_PARAMETER, location.getRegion());
+    }
+
+    public WeatherCondition getWeatherCondition(Location location) {
         WeatherCondition weatherCondition = null;
         try {
-            Response<ForecastAnswerDto> response = mForecastEndpoint.getWeatherForecast().execute();
+            String query = buildForecastQuery(location);
+            Response<ForecastAnswerDto> response = mYahooForecastEndpoint.getWeatherForecast(query, FORMAT).execute();
             if (response.body() != null) {
                 ForecastAnswerDto resultDto = response.body();
                 if (resultDto.getForecastDtoList() != null) {
@@ -49,13 +61,13 @@ public class YahooForecastManager implements ForecastManager {
                     for (ForecastDto forecastDto : forecastDtoList) {
                         forecastList.add(createForecast(forecastDto));
                     }
-                    Location location = createLocation(resultDto.getLocationDto());
-                    weatherCondition = createCondition(resultDto.getConditionDto(), location, forecastList);
+                    Location resultLocation = createLocation(resultDto.getLocationDto());
+                    weatherCondition = createCondition(resultDto.getConditionDto(), resultLocation, forecastList);
                 }
             }
         }
         catch (IOException e) {
-            return weatherCondition;
+            return null;
         }
         return weatherCondition;
     }

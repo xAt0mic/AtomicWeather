@@ -14,6 +14,7 @@
     <string name="sign_out">Sign Out</string>
     <string name="menu_open">Open navigation drawer</string>
     <string name="menu_close">Close navigation drawer</string>
+    <string name="menu_search_city">Search City</string>
 
     <!-- Weather Report -->
     <string name="forecast">Forecast :</string>
