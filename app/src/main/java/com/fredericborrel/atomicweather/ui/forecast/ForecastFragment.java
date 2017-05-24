@@ -131,6 +131,7 @@ public class ForecastFragment extends Fragment implements SwipeRefreshLayout.OnR
         } else {
             Toast.makeText(getContext(), this.getString(R.string.tv_network_not_available),Toast.LENGTH_LONG).show();
             mBinding.refreshLayout.setRefreshing(false);
+            mBinding.layoutLoader.setVisibility(View.GONE);
         }
     }
 
@@ -154,5 +155,6 @@ public class ForecastFragment extends Fragment implements SwipeRefreshLayout.OnR
                     .into(mBinding.ivDetailCondition);
         }
         mBinding.refreshLayout.setRefreshing(false);
+        mBinding.layoutLoader.setVisibility(View.GONE);
     }
 }
