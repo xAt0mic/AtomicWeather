@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.fredericborrel.atomicweather.ui.MainActivity" />
+            android:name="com.fredericborrel.atomicweather.ui.MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.fredericborrel.atomicweather.ui.AuthActivity"
             android:theme="@style/NoActionBarTheme"

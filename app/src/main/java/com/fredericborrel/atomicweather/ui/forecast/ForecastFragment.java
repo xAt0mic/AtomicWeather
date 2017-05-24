@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,13 +25,9 @@ import com.fredericborrel.atomicweather.data.model.Location;
 import com.fredericborrel.atomicweather.data.model.WeatherCondition;
 import com.fredericborrel.atomicweather.databinding.FragmentForecastBinding;
 import com.fredericborrel.atomicweather.utils.NetworkAvailability;
-import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.Background;
@@ -70,7 +66,7 @@ public class ForecastFragment extends Fragment implements SwipeRefreshLayout.OnR
         mBinding.forecastView.setLayoutManager(mLayoutManager);
         mBinding.forecastView.setAdapter(mItemAdapter);
 
-        SnapHelper snapHelper = new GravitySnapHelper(Gravity.START);
+        SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(mBinding.forecastView);
 
         setHasOptionsMenu(true);
