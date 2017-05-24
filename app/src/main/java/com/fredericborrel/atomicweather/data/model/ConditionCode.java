@@ -1,5 +1,10 @@
 package com.fredericborrel.atomicweather.data.model;
 
+import android.content.Context;
+import android.content.res.Resources;
+
+import com.fredericborrel.atomicweather.R;
+
 /**
  * Created by Frederic on 19/05/2017.
  */
@@ -53,6 +58,8 @@ public enum ConditionCode {
     ISOLATED_THUNDERSHOWERS,
     NOT_AVAILABLE;
 
+    private static final String RESOURCE_BASE_NAME = "ic_weather_";
+
     public static ConditionCode getCondition(int code) {
         switch (code) {
             case 0: return TORNADO;
@@ -104,8 +111,13 @@ public enum ConditionCode {
         }
     }
 
-    public static String getConditionImage(int code) {
-        return "http://l.yimg.com/a/i/us/we/52/" + code + ".gif";
+    public static int getConditionImage(Context context, int code) {
+        Resources resources =  context.getResources();
+        final int resourceID = resources.getIdentifier(
+                RESOURCE_BASE_NAME + code,
+                "drawable",
+                context.getPackageName());
+        return resourceID;
     }
 
     public static String getConditionString(int code) {

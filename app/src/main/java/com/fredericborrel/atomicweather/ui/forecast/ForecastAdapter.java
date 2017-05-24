@@ -36,7 +36,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
             mItemForecastBinding.itemHighTemp.setText(context.getString(R.string.temperature_formatter,forecast.getHigh()));
             mItemForecastBinding.itemDate.setText(forecast.getDate());
             Picasso.with(context)
-                    .load(ConditionCode.getConditionImage(forecast.getCode()))
+                    .load(ConditionCode.getConditionImage(context, forecast.getCode()))
                     .fit()
                     .centerCrop()
                     .into(mItemForecastBinding.itemWeatherImage);

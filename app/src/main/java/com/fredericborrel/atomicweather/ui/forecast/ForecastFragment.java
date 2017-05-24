@@ -148,7 +148,7 @@ public class ForecastFragment extends Fragment implements SwipeRefreshLayout.OnR
             mBinding.tvDetailTemperature.setText(getContext().getString(R.string.temperature_formatter, weatherCondition.getCurrentTemp()));
             mBinding.tvDetailCondition.setText(ConditionCode.getConditionString(weatherCondition.getCurrentCode()));
             Picasso.with(getContext())
-                    .load(ConditionCode.getConditionImage(weatherCondition.getCurrentCode()))
+                    .load(ConditionCode.getConditionImage(getActivity(), weatherCondition.getCurrentCode()))
                     .fit()
                     .centerInside()
                     .into(mBinding.ivDetailCondition);
