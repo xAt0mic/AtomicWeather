@@ -3,8 +3,6 @@ package com.fredericborrel.atomicweather.data.model;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.fredericborrel.atomicweather.R;
-
 /**
  * Created by Frederic on 19/05/2017.
  */

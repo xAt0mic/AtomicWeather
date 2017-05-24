@@ -40,11 +40,8 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:10.2.4'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'de.hdodenhof:circleimageview:2.1.0'
-    compile "org.greenrobot:eventbus:3.0.0"
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.j256.ormlite:ormlite-core:5.0'
-    compile 'com.j256.ormlite:ormlite-android:5.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

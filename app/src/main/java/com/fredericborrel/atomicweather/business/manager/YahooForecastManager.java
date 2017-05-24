@@ -1,14 +1,14 @@
 package com.fredericborrel.atomicweather.business.manager;
 
+import com.fredericborrel.atomicweather.business.webservices.yahoo.weather.dto.ForecastAnswerDto;
 import com.fredericborrel.atomicweather.business.webservices.yahoo.weather.dto.ForecastConditionDto;
 import com.fredericborrel.atomicweather.business.webservices.yahoo.weather.dto.ForecastDto;
 import com.fredericborrel.atomicweather.business.webservices.yahoo.weather.dto.ForecastLocationDto;
-import com.fredericborrel.atomicweather.data.model.WeatherCondition;
-import com.fredericborrel.atomicweather.data.model.Location;
-import com.fredericborrel.atomicweather.utils.Constant;
-import com.fredericborrel.atomicweather.business.webservices.yahoo.weather.dto.ForecastAnswerDto;
 import com.fredericborrel.atomicweather.business.webservices.yahoo.weather.endpoints.YahooForecastEndpoint;
 import com.fredericborrel.atomicweather.data.model.Forecast;
+import com.fredericborrel.atomicweather.data.model.Location;
+import com.fredericborrel.atomicweather.data.model.WeatherCondition;
+import com.fredericborrel.atomicweather.utils.Constant;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,15 +30,14 @@ public class YahooForecastManager implements ForecastManager {
     private final static String FORMAT = "json";
 
     private YahooForecastEndpoint mYahooForecastEndpoint;
-    private Retrofit mRetrofit;
 
     YahooForecastManager() {
-        mRetrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constant.YAHOO_API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        mYahooForecastEndpoint = mRetrofit.create(YahooForecastEndpoint.class);
+        mYahooForecastEndpoint = retrofit.create(YahooForecastEndpoint.class);
     }
 
     public String buildForecastQuery(Location location) {

@@ -4,7 +4,6 @@ import com.fredericborrel.atomicweather.business.webservices.yahoo.weather.dto.F
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**

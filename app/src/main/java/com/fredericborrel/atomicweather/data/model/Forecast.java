@@ -1,7 +1,5 @@
 package com.fredericborrel.atomicweather.data.model;
 
-import java.util.Date;
-
 /**
  * Created by Frederic on 19/05/2017.
  */

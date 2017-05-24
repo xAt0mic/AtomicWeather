@@ -20,21 +20,24 @@ import java.util.List;
 /**
  * Created by Frederic on 12/04/16.
  */
-public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastViewHolder> {
+class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastViewHolder> {
 
     private List<Forecast> mForecastList = new ArrayList<>();
     private Context mContext;
 
-    public class ForecastViewHolder extends RecyclerView.ViewHolder {
+    class ForecastViewHolder extends RecyclerView.ViewHolder {
         private ItemForecastBinding mItemForecastBinding;
 
-        public ForecastViewHolder(ItemForecastBinding binding) {
+        ForecastViewHolder(ItemForecastBinding binding) {
             super(binding.getRoot());
             mItemForecastBinding = binding;
         }
 
-        public void bind(Context context, Forecast forecast) {
-            String formattedDate = Utils.convertStringDate(forecast.getDate(), Constant.YAHOO_DATE_FORMAT_INPUT, Constant.CARDVIEW_DATE_FORMAT_OUTPUT);
+        void bind(Context context, Forecast forecast) {
+            String formattedDate = Utils.convertStringDate(
+                    forecast.getDate(),
+                    Constant.YAHOO_DATE_FORMAT_INPUT,
+                    Constant.CARDVIEW_DATE_FORMAT_OUTPUT);
 
             mItemForecastBinding.itemLowTemp.setText(context.getString(R.string.temperature_formatter,forecast.getLow()));
             mItemForecastBinding.itemHighTemp.setText(context.getString(R.string.temperature_formatter,forecast.getHigh()));
@@ -68,7 +71,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         return mForecastList != null ? mForecastList.size() : 0;
     }
 
-    public void setForecastList(List<Forecast> forecastList) {
+    void setForecastList(List<Forecast> forecastList) {
         mForecastList.clear();
         mForecastList.addAll(forecastList);
         notifyDataSetChanged();
