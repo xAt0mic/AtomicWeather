@@ -10,6 +10,8 @@ import com.fredericborrel.atomicweather.R;
 import com.fredericborrel.atomicweather.data.model.ConditionCode;
 import com.fredericborrel.atomicweather.data.model.Forecast;
 import com.fredericborrel.atomicweather.databinding.ItemForecastBinding;
+import com.fredericborrel.atomicweather.utils.Constant;
+import com.fredericborrel.atomicweather.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -32,9 +34,11 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         }
 
         public void bind(Context context, Forecast forecast) {
+            String formattedDate = Utils.convertStringDate(forecast.getDate(), Constant.YAHOO_DATE_FORMAT_INPUT, Constant.CARDVIEW_DATE_FORMAT_OUTPUT);
+
             mItemForecastBinding.itemLowTemp.setText(context.getString(R.string.temperature_formatter,forecast.getLow()));
             mItemForecastBinding.itemHighTemp.setText(context.getString(R.string.temperature_formatter,forecast.getHigh()));
-            mItemForecastBinding.itemDate.setText(forecast.getDate());
+            mItemForecastBinding.itemDate.setText(formattedDate);
             Picasso.with(context)
                     .load(ConditionCode.getConditionImage(context, forecast.getCode()))
                     .fit()

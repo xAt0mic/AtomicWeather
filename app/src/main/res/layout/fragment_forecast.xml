@@ -38,25 +38,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_margin="10dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_marginStart="10dp"
                         android:textSize="@dimen/item_title_text_size"
                         android:text="@string/forecast"/>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
+                        android:layout_margin="10dp"
                         android:background="@color/white"/>
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/forecast_view"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"/>
 
                 </LinearLayout>
 
@@ -86,6 +87,7 @@
                         android:layout_alignTop="@id/tv_detail_temperature"
                         android:layout_alignBottom="@id/tv_detail_temperature"
                         android:layout_toEndOf="@id/tv_detail_temperature"
+                        android:tint="@color/white"
                         android:layout_gravity="center_vertical"/>
 
                     <TextView
