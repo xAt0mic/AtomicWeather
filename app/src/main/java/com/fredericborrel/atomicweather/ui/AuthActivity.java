@@ -2,6 +2,7 @@ package com.fredericborrel.atomicweather.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.fredericborrel.atomicweather.R;
+import com.fredericborrel.atomicweather.databinding.ActivityAuthBinding;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -37,13 +39,13 @@ public class AuthActivity extends AppCompatActivity implements GoogleApiClient.O
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     // GUI
-    private SignInButton mSignInBtn;
+    private ActivityAuthBinding mBinding;
     private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_auth);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_auth);
 
         // Configure sign-in to request the user's ID, email address, and basic profile
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -74,8 +76,7 @@ public class AuthActivity extends AppCompatActivity implements GoogleApiClient.O
             }
         };
 
-        mSignInBtn = (SignInButton)findViewById(R.id.sign_in_button);
-        mSignInBtn.setOnClickListener(this);
+        mBinding.signInButton.setOnClickListener(this);
     }
 
     @Override

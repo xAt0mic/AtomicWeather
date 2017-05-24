@@ -51,7 +51,6 @@ public class ForecastFragment extends Fragment implements SwipeRefreshLayout.OnR
     private FragmentForecastBinding mBinding;
     private ForecastManager mForecastManager;
     private ForecastAdapter mItemAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     private Location mCurrentLocation;
 
     @Override
@@ -60,10 +59,10 @@ public class ForecastFragment extends Fragment implements SwipeRefreshLayout.OnR
         mBinding.refreshLayout.setOnRefreshListener(this);
 
         mItemAdapter = new ForecastAdapter();
-        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
         mBinding.forecastView.setHasFixedSize(true);
-        mBinding.forecastView.setLayoutManager(mLayoutManager);
+        mBinding.forecastView.setLayoutManager(layoutManager);
         mBinding.forecastView.setAdapter(mItemAdapter);
 
         SnapHelper snapHelper = new LinearSnapHelper();

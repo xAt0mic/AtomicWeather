@@ -2,12 +2,12 @@ package com.fredericborrel.atomicweather.ui;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.fredericborrel.atomicweather.R;
+import com.fredericborrel.atomicweather.databinding.ActivityMainBinding;
 import com.fredericborrel.atomicweather.ui.forecast.ForecastFragment;
 import com.fredericborrel.atomicweather.ui.forecast.ForecastFragment_;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,16 +38,12 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
     // GUI
     private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayout mDrawerLayout;
-    private NavigationView mNavigationView;
-    private TextView mUserNameMenu;
-    private TextView mEmailMenu;
-    private CircleImageView mProfilePictureMenu;
+    private ActivityMainBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        mBinding = DataBindingUtil.setContentView(this ,R.layout.activity_main);
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -61,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         // Listen to the BackStack to adapt the ActionBar
         getSupportFragmentManager().addOnBackStackChangedListener(this);
 
-        if(findViewById(R.id.main_fragment_container) != null){
+        if(mBinding.mainFragmentContainer != null){
             if (savedInstanceState != null){
                 return;
             }
@@ -69,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             ForecastFragment feedFragment = ForecastFragment_.builder().build();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.main_fragment_container, feedFragment)
+                    .add(mBinding.mainFragmentContainer.getId(), feedFragment)
                     .commit();
         }
     }
@@ -111,17 +108,14 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     }
 
     private void setupDrawer(){
-        // Retrieve Views
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.main_drawer_layout);
-        mNavigationView = (NavigationView)findViewById(R.id.main_navList);
 
-        View header = mNavigationView.getHeaderView(0);
-        mUserNameMenu = (TextView)header.findViewById(R.id.menu_username);
-        mEmailMenu = (TextView)header.findViewById(R.id.menu_email);
-        mProfilePictureMenu = (CircleImageView)header.findViewById(R.id.menu_image);
+        View header = mBinding.mainNavList.getHeaderView(0);
+        TextView userNameMenu = (TextView)header.findViewById(R.id.menu_username);
+        TextView emailMenu = (TextView)header.findViewById(R.id.menu_email);
+        CircleImageView profilePictureMenu = (CircleImageView)header.findViewById(R.id.menu_image);
 
         // Adding behavior when we are opening/closing the mn_drawer
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.menu_open, R.string.menu_close){
+        mDrawerToggle = new ActionBarDrawerToggle(this, mBinding.mainDrawerLayout, R.string.menu_open, R.string.menu_close){
             // Called when a mn_drawer has settled in a completely open state.
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -135,14 +129,14 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             }
         };
         mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.addDrawerListener(mDrawerToggle);
+        mBinding.mainDrawerLayout.addDrawerListener(mDrawerToggle);
 
-        mNavigationView.setNavigationItemSelectedListener(
+        mBinding.mainNavList.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         item.setChecked(true);
-                        mDrawerLayout.closeDrawers();
+                        mBinding.mainDrawerLayout.closeDrawers();
                         switch (item.getItemId()){
                             case R.id.sign_out_menu_item :
                                 signOut();
@@ -153,11 +147,11 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         );
 
         // Set Google Account Information to the header
-        mEmailMenu.setText(mUser.getEmail());
-        mUserNameMenu.setText(mUser.getDisplayName());
+        emailMenu.setText(mUser.getEmail());
+        userNameMenu.setText(mUser.getDisplayName());
         Picasso.with(getApplicationContext())
                 .load(mUser.getPhotoUrl())
-                .into(mProfilePictureMenu);
+                .into(profilePictureMenu);
     }
 
     // Sign out the user and send him back to the Authentication Activity
